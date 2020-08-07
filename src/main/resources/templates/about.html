@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:replace="fragments/elements :: header"/>
+	<title>CRUD Application | About</title>
+</head>
+<body>
+<div class="wrapper d-flex align-items-stretch">
+	<div id="content">
+		<!--/*  Navbar fragment  */-->
+		<div th:replace="fragments/elements :: navbar"></div>
+		<!--/*  Main content  */-->
+		<div class="row no-gutters justify-content-center p-0 p-lg-4">
+			<div class="col-12 col-lg-8">
+				<div class="p-3 text-light dark-background rounded-lg shadow">
+					<h1 class="display-4 text-center">CRUD Application</h1>
+					<p class="lead text-center">This site was developed using the following technologies:</p>
+					<div class="my-4 row no-gutters">
+						<ul class="list-group col-11 col-md-6 mx-auto border border-secondary">
+							<li class="list-group-item text-light bg-dark">
+								<img alt="boot strap logo" class="col-3 col-xl-2 img-fluid" src=""
+									 th:src="@{/icons/spring-boot.png}">
+								Spring boot
+							</li>
+							<li class="list-group-item text-light bg-dark">
+								<img alt="java logo" class="col-3 col-xl-2 img-fluid" src=""
+									 th:src="@{/icons/java.png}">
+								Java
+							</li>
+							<li class="list-group-item text-light bg-dark">
+								<img alt="postgresql logo" class="col-3 col-xl-2 img-fluid" src=""
+									 th:src="@{/icons/postgresql.png}">
+								PostgreSQL
+							</li>
+							<li class="list-group-item text-light bg-dark">
+								<img alt="h2 logo" class="col-3 col-xl-2 img-fluid" src=""
+									 th:src="@{/icons/h2.jpg}">
+								H2
+							</li>
+							<li class="list-group-item text-light bg-dark">
+								<img alt="thymeleaf logo" class="col-3 col-xl-2 img-fluid" src=""
+									 th:src="@{/icons/thymeleaf.png}">
+								Thymeleaf
+							</li>
+							<li class="list-group-item text-light bg-dark">
+								<img alt="javascript logo" class="col-3 col-xl-2 img-fluid" src=""
+									 th:src="@{/icons/javascript.jpg}">
+								Javascript
+							</li>
+							<li class="list-group-item text-light bg-dark">
+								<img alt="jquery logo" class="col-3 col-xl-2 img-fluid" src=""
+									 th:src="@{/icons/jquery.png}">
+								jQuery
+							</li>
+							<li class="list-group-item text-light bg-dark">
+								<img alt="bootstrap logo" class="col-3 col-xl-2 img-fluid" src=""
+									 th:src="@{/icons/bootstrap.png}">
+								Bootstrap
+							</li>
+							<li class="list-group-item text-light bg-dark">
+								<img alt="html 5 logo" class="col-3 col-xl-2 img-fluid" src=""
+									 th:src="@{/icons/html5.png}">
+								HTML 5
+							</li>
+							<li class="list-group-item text-light bg-dark">
+								<img alt="css 3 logo" class="col-3 col-xl-2 img-fluid" src=""
+									 th:src="@{/icons/css3.png}">
+								CSS 3
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/*  Footer fragment  */-->
+		<div th:replace="fragments/elements :: footer"></div>
+	</div>
+</div>
+</body>
+</html>

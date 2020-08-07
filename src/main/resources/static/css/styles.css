@@ -1,0 +1,161 @@
+/*  Tags  */
+footer {
+    background: #2b2b2b;
+}
+
+/*  IDs  */
+#add-user-btn {
+    background: #189735;
+    box-shadow: 1px 1px 2px #2b2b2b;
+    color: #F8F8F8;
+}
+
+#bottom-bar {
+    height: 25px;
+}
+
+#clear-btn-container {
+    background: #dc3545;
+    box-shadow: 1px 1px 2px #2b2b2b;
+    color: #F8F8F8;
+    display: none;
+}
+
+#clear-btn-x {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    visibility: hidden;
+}
+
+#content {
+    background: #edf5f8;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+}
+
+#edit-icon, #delete-icon, #action-btn > button > i {
+    color: #4F4F4F;
+}
+
+#go-to-top-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+}
+
+#main-content {
+    height: 100%;
+    padding-bottom: 25px;
+    position: absolute;
+}
+
+#main-footer {
+    background: #2f333e;
+    bottom: 0;
+    color: #fff;
+    padding: 20px 10px;
+    position: absolute;
+    width: 100%;
+}
+
+#main-table {
+    background: #FFF;
+}
+
+#main-table > thead > tr > th {
+    border-bottom: 1px solid #b5bac4;
+    font-weight: 600;
+}
+
+#results-label {
+    font-weight: 600;
+}
+
+#search-btn-container {
+    background: #005681;
+    box-shadow: 1px 1px 2px #2b2b2b;
+    color: #F8F8F8;
+    display: block;
+}
+
+#search-input-container-x {
+    background: #FFF;
+    box-shadow: 2px 1px 2px #2b2b2b;
+    display: flex;
+}
+
+#search-input-container-x #input-search-x {
+    border: none;
+    outline: none;
+}
+
+#shadow {
+    box-shadow: inset 3px 3px 10px 0 red;
+}
+
+#table-head-container {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#table-head-id {
+    text-align: center;
+}
+
+#top-bar-container {
+    background: #2B2B2B;
+    box-shadow: 0 1px 4px #2b2b2b;
+}
+
+/*  Classes  */
+.box-shadow {
+    box-shadow: 1px 1px 2px #2b2b2b;
+}
+
+.current-page {
+    background: #009688;
+}
+
+.dark-background {
+    background: #212121;
+}
+
+.modal-footer {
+    padding: 0 !important;
+}
+
+.modal-header {
+    background: #eaf2f5;
+    color: #444;
+    padding: .5rem !important;
+}
+
+.nav-pills .nav-link.active {
+    background: #09748A;
+}
+
+.search-bar-elements, .table-head-row {
+    display: inline-block;
+}
+
+.table > tbody > tr > th {
+    font-weight: 400;
+    text-align: center;
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.table-head-text {
+    min-width: 90px;
+    padding: 5px 10px !important;
+}
+
+.modal-content {
+    box-shadow: 0 1px 4px #2b2b2b;
+}

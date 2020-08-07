@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+<!--/*  Head content  */-->
+<th:block th:fragment="header">
+	<meta charset="UTF-8" content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+	<link href="/webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"/>
+	<script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<link href="/webjars/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"/>
+	<link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</th:block>
+<!--/*  Navbar  */-->
+<th:block th:fragment="navbar">
+	<nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
+		<div class="navbar-brand pl-2">
+			<i class="fas fa-database"></i>
+			<span>&nbsp;CRUD App</span>
+		</div>
+		<button class="navbar-toggler btn-sm" data-target="#navbarNav" data-toggle="collapse" type="button">
+			<i class="fa fa-bars"></i>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link navbar-link pl-2" href="/employees"
+					   th:classappend="${#httpServletRequest.requestURI == '/employees'} ? 'current-page active'">
+						Table
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link navbar-link pl-2" href="/about"
+					   th:classappend="${#httpServletRequest.requestURI == '/about'} ? 'current-page active'">
+						About
+					</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+</th:block>
+<!--/*  Modal - Delete user  */-->
+<th:block th:fragment="delete-user-modal">
+	<div class="modal modal-warning fade in" id="delete-user-modal">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header text-center">
+					<div class="modal-title w-100 font-weight-bold">Delete User</div>
+					<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+						<span aria-hidden="true">x</span>
+					</button>
+				</div>
+				<div class="modal-body text-center">
+					<p>You are about to delete this employee, do you want to proceed?</p>
+				</div>
+				<div class="modal-footer">
+					<form id="delete-user-form" method="post" th:action="@{/employees/delete}">
+						<input id="employee-number-delete" name="employee_number" type="hidden" value="">
+						<button class="btn btn-secondary btn-sm" data-dismiss="modal" type="button">Cancel</button>
+						<button class="btn btn-danger btn-sm" type="submit">Delete</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+<!--/*  Modal - Edit & create user  */-->
+<th:block th:fragment="edit-create-user-modal">
+	<div class="modal modal-warning fade in" id="edit-user-modal">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header text-center">
+					<div class="modal-title w-100 font-weight-bold" id="add-edit-title-text">Add or Edit User</div>
+					<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+						<span aria-hidden="true">x</span>
+					</button>
+				</div>
+				<form id="edit-user-form" method="post" th:action="@{/employees/add-edit}" th:object="${employee}">
+					<div class="modal-body">
+						<div class="form-row">
+							<div class="col-md-12 form-group">
+								<label for="employee-name-edit">Name</label>
+								<input class="form-control" id="employee-name-edit"
+									   required th:field="*{employee_name}" type="text">
+							</div>
+							<div class="col-md-12 form-group">
+								<label for="employee-lastname-edit">Last name</label>
+								<input class="form-control" id="employee-lastname-edit"
+									   required th:field="*{employee_lastname}" type="text">
+								<input id="employee-number-edit" th:field="*{employee_number}" type="hidden">
+							</div>
+							<div class="col-md-12 form-group">
+								<label for="title-edit">Title</label>
+								<select class="form-control" id="title-edit" required th:field="*{title}">
+									<option disabled hidden value="">Choose...</option>
+									<option th:each="jobTitle : ${jobTitles}" th:text="${jobTitle.job_title}"
+											th:value="${jobTitle.job_title}"></option>
+								</select>
+							</div>
+							<div class="col-md-12 form-group">
+								<label for="joining-date-edit">Joining date</label>
+								<input class="form-control" id="joining-date-edit"
+									   required th:field="*{joining_date}" type="date">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary btn-sm" data-dismiss="modal" type="button">Cancel</button>
+						<button class="btn btn-success btn-sm" type="submit">Save</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</th:block>
+<!--/*  Go to top button  */-->
+<th:block th:fragment="go-to-top">
+	<a class="btn btn-primary" href="#" id="go-to-top-btn">
+		<i class="fas fa-chevron-up"></i>
+	</a>
+</th:block>
+<!--/*  Footer  */-->
+<th:block th:fragment="footer">
+	<footer class="bg-dark d-flex justify-content-center mt-auto">
+		<div class="text-center py-1">
+			<a class="mx-auto" href="">Developed by 「ナタナエル」</a>
+		</div>
+	</footer>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:replace="fragments/elements :: header"/>
+	<title>CRUD Application | Home</title>
+</head>
+<body>
+<div class="wrapper d-flex align-items-stretch">
+	<!--/*  Main Content  */-->
+	<div id="content">
+		<!--/*  Navbar fragment  */-->
+		<div th:replace="fragments/elements :: navbar"></div>
+		<!--/*  Buttons bar  */-->
+		<div class="d-flex justify-content-between row no-gutters mx-3 mx-md-5 my-3">
+			<!--/*  Show results per page  */-->
+			<div class="input-group input-group-sm col-12 col-lg-3 row no-gutters my-1">
+				<th:block th:if="${numResultsTotal > 0}">
+					<div class="bg-light input-group-prepend col-8 col-lg-6 box-shadow">
+						<label class="input-group-text col-12 justify-content-center bg-light " for="show-results"
+							   id="results-label">
+							Results per page:
+						</label>
+					</div>
+					<select class="custom-select col-4 col-lg-3 box-shadow" id="show-results">
+						<option th:selected="${#strings.equals(param.show, 10)}" value="10">10</option>
+						<option th:selected="${#strings.equals(param.show, 25)}" value="25">25</option>
+						<option th:selected="${#strings.equals(param.show, 50)}" value="50">50</option>
+						<option th:selected="${#strings.equals(param.show, numResultsTotal)}"
+								th:value="${numResultsTotal}">all
+						</option>
+					</select>
+				</th:block>
+			</div>
+			<!--/*  Search input & clear search  */-->
+			<form class="input-group-sm col-12 col-lg-5 row no-gutters my-1">
+				<div class="form-control row no-gutters row-cols-2 col-8 col-lg-6" id="search-input-container-x">
+					<label for="input-search-x" hidden="hidden"></label>
+					<input autocomplete="off" class="col-11" id="input-search-x" name="search"
+						   th:value="${param.search}"
+						   type="text">
+					<i class="col-1 fas fa-backspace" id="clear-btn-x"></i>
+				</div>
+				<button class="btn btn-sm col-4 col-lg-2" id="search-btn-container" type="submit">
+					<i class="fas fa-search"></i>
+					<span>&nbsp;Search</span>
+				</button>
+				<button class="btn btn-sm col-4 col-lg-2" id="clear-btn-container" type="button">
+					<i class="fas fa-times" id="clear-icon">&nbsp;</i>
+					<span id="clear-btn">Clear</span>
+				</button>
+			</form>
+			<!--/*  New employee button  */-->
+			<a class="btn btn-sm btn-outline-secondary col-12 col-lg-2 my-1" id="add-user-btn">
+				<i class="fas fa-user-plus"></i>
+				<span>&nbsp;New employee</span>
+			</a>
+		</div>
+		<!--/*  Table  */-->
+		<div class="mx-3 mx-md-5">
+			<div id="table-content">
+				<div class="table-responsive shadow">
+					<table class="table table-borderless table-hover table-sm" id="main-table">
+						<!--/*  Table headers & sorting buttons  */-->
+						<thead id="table-head-container"
+							   th:with="searchQuery=${#strings.isEmpty(param.search)} ?
+							   '' : '&search=' + ${param.search},
+                               showQuery=${#strings.isEmpty(param.show)} ? '' : '&show=' + ${param.show},
+                               pageQuery='&page=1',
+                               sort_direction=${#strings.isEmpty(param.sort) ?
+                               'desc' : (#strings.contains(param.sort, 'asc') ? 'desc' : 'asc')}">
+						<tr>
+							<th class="table-head-text" id="table-head-id" scope="col"
+								th:with="sort_field_direction='sort=employee_number,'+${sort_direction}">
+								<div class="table-head-row">Employee #</div>
+								<a class="table-head-row btn" th:href="${#httpServletRequest.requestURI} + '?' +
+                                ${sort_field_direction} + ${searchQuery} + ${showQuery}  + ${pageQuery}">
+									<th:block th:switch="${sortingValue}"
+											  th:with="sortingValue=${param.sort == null ? '' : param.sort[0]}">
+										<th:block th:case="'employee_number,desc'">
+											<i class="fas fa-sort-down"></i>
+										</th:block>
+										<th:block th:case="'employee_number,asc'">
+											<i class="fas fa-sort-up"></i>
+										</th:block>
+										<th:block th:case="*">
+											<i class="fas fa-sort"></i>
+										</th:block>
+									</th:block>
+								</a>
+							</th>
+							<th class="table-head-text" scope="col"
+								th:with="sort_field_direction='sort=employee_name,'+${sort_direction}">
+								<div class="table-head-row">First name</div>
+								<a class="table-head-row btn" th:href="${#httpServletRequest.requestURI} + '?' +
+                                ${sort_field_direction} + ${searchQuery} + ${showQuery}  + ${pageQuery}">
+									<th:block th:switch="${sortingValue}"
+											  th:with="sortingValue=${param.sort == null ? '' : param.sort[0]}">
+										<th:block th:case="'employee_name,desc'">
+											<i class="fas fa-sort-down"></i>
+										</th:block>
+										<th:block th:case="'employee_name,asc'">
+											<i class="fas fa-sort-up"></i>
+										</th:block>
+										<th:block th:case="*">
+											<i class="fas fa-sort"></i>
+										</th:block>
+									</th:block>
+								</a>
+							</th>
+							<th class="table-head-text" scope="col"
+								th:with="sort_field_direction='sort=employee_lastname,'+${sort_direction}">
+								<div class="table-head-row">Last name</div>
+								<a class="table-head-row btn" th:href="${#httpServletRequest.requestURI} + '?' +
+                                ${sort_field_direction} + ${searchQuery} + ${showQuery}  + ${pageQuery}">
+									<th:block th:switch="${sortingValue}"
+											  th:with="sortingValue=${param.sort == null ? '' : param.sort[0]}">
+										<th:block th:case="'employee_lastname,desc'">
+											<i class="fas fa-sort-down"></i>
+										</th:block>
+										<th:block th:case="'employee_lastname,asc'">
+											<i class="fas fa-sort-up"></i>
+										</th:block>
+										<th:block th:case="*">
+											<i class="fas fa-sort"></i>
+										</th:block>
+									</th:block>
+								</a>
+							</th>
+							<th class="table-head-text" scope="col"
+								th:with="sort_field_direction='sort=title,'+${sort_direction}">
+								<div class="table-head-row">Job title</div>
+								<a class="table-head-row btn" th:href="${#httpServletRequest.requestURI} + '?' +
+                                ${sort_field_direction} + ${searchQuery} + ${showQuery}  + ${pageQuery}">
+									<th:block th:switch="${sortingValue}"
+											  th:with="sortingValue=${param.sort == null ? '' : param.sort[0]}">
+										<th:block th:case="'title,desc'">
+											<i class="fas fa-sort-down"></i>
+										</th:block>
+										<th:block th:case="'title,asc'">
+											<i class="fas fa-sort-up"></i>
+										</th:block>
+										<th:block th:case="*">
+											<i class="fas fa-sort"></i>
+										</th:block>
+									</th:block>
+								</a>
+							</th>
+							<th class="table-head-text" scope="col"
+								th:with="sort_field_direction='sort=joining_date,'+${sort_direction}">
+								<div class="table-head-row">Joining date</div>
+								<a class="table-head-row btn" th:href="${#httpServletRequest.requestURI} + '?' +
+                                ${sort_field_direction} + ${searchQuery} + ${showQuery}  + ${pageQuery}">
+									<th:block th:switch="${sortingValue}"
+											  th:with="sortingValue=${param.sort == null ? '' : param.sort[0]}">
+										<th:block th:case="'joining_date,desc'">
+											<i class="fas fa-sort-down"></i>
+										</th:block>
+										<th:block th:case="'joining_date,asc'">
+											<i class="fas fa-sort-up"></i>
+										</th:block>
+										<th:block th:case="*">
+											<i class="fas fa-sort"></i>
+										</th:block>
+									</th:block>
+								</a>
+							</th>
+							<th scope="col">Edit & Delete</th>
+						</tr>
+						</thead>
+						<!--/*  Table body  */-->
+						<tbody>
+						<tr th:each="employee: ${employees}">
+							<th scope="row" th:text="${employee.employee_number}"></th>
+							<td th:text="${employee.employee_name}"></td>
+							<td th:text="${employee.employee_lastname}"></td>
+							<td th:text="${employee.title}"></td>
+							<td th:text="${employee.joining_date}"></td>
+							<!--/*  Edit & delete buttons  */-->
+							<td>
+								<div class="d-flex">
+									<a class="btn edit-modal-btn"
+									   th:href="@{/employees/find-employee/{id}(id=${employee.employee_number})}">
+										<i class="fas fa-edit" id="edit-icon"></i>
+									</a>
+									<a class="btn delete-modal-btn">
+										<i class="far fa-trash-alt" id="delete-icon"></i>
+									</a>
+									<input class="delete-hidden-id" name="employee_number"
+										   th:value="${employee.employee_number}" type="hidden">
+								</div>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!--/*  Pagination Bar  */-->
+		<div class="d-flex justify-content-between row no-gutters row no-gutters mx-3 mx-md-5 my-3">
+			<!--/*  Indexes of results and total results  */-->
+			<th:block th:if="${numResultsTotal > 0}"
+					  th:with="firstIndexOnPage=${(page - 1) * showPerPage + 1 }">
+				<th:block th:with="lastIndexOnPage=${firstIndexOnPage + numResultsInPage - 1}">
+					<div class="mb-2 mb-sm-0"
+						 th:text="'Showing: ' + ${firstIndexOnPage} + ' - ' +
+						  ${lastIndexOnPage} + ' of '+ ${numResultsTotal}">
+					
+					</div>
+				</th:block>
+			</th:block>
+			<!--/*  Pagination buttons  */-->
+			<ul class="nav nav-pills" th:remove="${employees.totalPages <= 1} ? all : none"
+				th:with="searchQuery=${#strings.isEmpty(param.search)} ? '' : '&search=' + ${param.search},
+                               showQuery=${#strings.isEmpty(param.show)} ? '' : '&show=' + ${param.show},
+                               pageQuery='&page=1',
+                               sort_direction=${#strings.isEmpty(param.sort) ?
+                               'desc' : (#strings.contains(param.sort, 'asc') ? 'desc' : 'asc')}">
+				<li class="nav-item">
+					<a class="nav-link"
+					   th:attr="href=${page > 1} ? '__@{${#httpServletRequest.requestURI}' +
+					   '(search=${param.search}, show=${param.show}, sort=${param.sort},page=${page -1})}__' : ''">
+						<i class="fas fa-chevron-left"></i>
+					</a>
+				</li>
+				<li class="nav-item" th:each="page_num : ${#numbers.sequence(1, employees.totalPages)}">
+					<a class="nav-link" th:classappend="${page == page_num} ? 'active' : ''"
+					   th:href="@{${#httpServletRequest.requestURI}
+					   (search=${param.search}, show=${param.show}, sort=${param.sort},page=${page_num})}"
+					   th:text="${page_num}">
+					</a>
+				<li class="nav-item">
+					<a class="nav-link"
+					   th:attr="href=${page < employees.totalPages} ? '__@{${#httpServletRequest.requestURI}
+					   (search=${param.search}, show=${param.show}, sort=${param.sort},page=${page +1})}__' : ''">
+						<i class="fas fa-chevron-right"></i>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<!--/*  Footer fragment  */-->
+		<div th:replace="fragments/elements :: footer"></div>
+	</div>
+</div>
+<!--/*  Go-to-top fragment  */-->
+<div th:replace="fragments/elements :: go-to-top"></div>
+<!--/*  Modals fragments  */-->
+<div th:replace="fragments/elements :: delete-user-modal"></div>
+<div th:replace="fragments/elements :: edit-create-user-modal"></div>
+<!--/*  Javascript files  */-->
+<script th:src="@{/js/modals.js}" type="text/javascript"></script>
+<script th:src="@{/js/results-size.js}" type="text/javascript"></script>
+<script th:src="@{/js/search-box.js}" type="text/javascript"></script>
+<script th:src="@{/js/go-to-top.js}" type="text/javascript"></script>
+</body>
+</html>
